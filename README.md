@@ -15,21 +15,22 @@ There are two parts to this program:
 
 # Functions
 Key Generation:
-    To generate a key, run the program and select '1'. The back end will generate a key pair with a random id and save it to out/keys/key_id.key
 
+    To generate a key, run the program and select '1'. The back end will generate a key pair with a random id and save it to out/keys/key_id.key
     Keys are base64 encoded.
 
 Encryption:
-    To encrypt a message, select '2' on the Menu screen. You will be asked for your key id. Input your key id from the previous step. The front end will look in out/keys for a key pair matching this id and load it.
 
+    To encrypt a message, select '2' on the Menu screen. You will be asked for your key id. Input your key id from the previous step. The front end will look in out/keys for a key pair matching this id and load it.
     You will then be asked for plain text. Enter plain text, hit 'Enter' and the result will be stored, base64 encoded, in out/cipher_texts
 
-Decryption
-    To decrypt a message, select '3' on the Menu Screen. You will be asked only for your key id. The front end will look in out/cipher_texts for encrypted cipher text matching that key. Note that only ONE block of cipher text per key is stored at any time i.e encrypting new text with the a key will overwrite any old cipher text generated with the same key.
+Decryption:
 
+    To decrypt a message, select '3' on the Menu Screen. You will be asked only for your key id. The front end will look in out/cipher_texts for encrypted cipher text matching that key. Note that only ONE block of cipher text per key is stored at any time i.e encrypting new text with the a key will overwrite any old cipher text generated with the same key.
     The program will decrypt and print out the plaintext.
 
-Quit
+Quit:
+
     Enter '4'
 
 # How To Run
