@@ -28,17 +28,18 @@ class ElGamalSuite {
     int k = _randomSecret();
     // Compute r as alpha^k
     int r = pow(key.alpha, k).toInt();
+    // Compute β^k
+    int betaK = pow(key.beta, k).toInt();
     String cipherText = "$r|";
     // Compute each individual 't' and add it to the
     // cipher text
     for (var i = 0; i < message.codeUnits.length; i++) {
       int codeUnit = message.codeUnits[i];
-      int betaK = pow(key.beta, k).toInt();
       int t = betaK * codeUnit;
       String hexString = "0x${t.toRadixString(16)}";
       cipherText += hexString;
       // Only add a comma if we are not at the end
-      // of the string
+      // of the message
       if (i + 1 != message.codeUnits.length) {
         cipherText += ",";
       }
@@ -52,7 +53,6 @@ class ElGamalSuite {
   /// Cipher text is first base64 decoded.
   /// The first part of the text is the 'r' and the last part
   /// is the sequence of tN.
-  ///
   String decrypt(String cipherText, PrivateKey privateKey) {
     String decodedCipherText = String.fromCharCodes(base64Decode(cipherText));
     List<String> parts = decodedCipherText.split("|");
@@ -167,7 +167,7 @@ class ElGamalKeyGenerator {
     if (b == BigInt.one || b == n - BigInt.one) {
       return true;
     }
-    // Computer b k times
+    // Compute b k times
     for (var _ = 0; _ < k; _++) {
       // If bn = 1
       if (b == BigInt.one) {

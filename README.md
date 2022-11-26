@@ -38,3 +38,8 @@ This program is made entirely in Dart. You should follow instructions
 here: https://dart.dev/get-dart to install Dart. 
 
 Run the program with 'dart run' from this directory.
+
+# Helpful Notes
+The pow function does exponentiation. So a.pow(5) == "a-to-the-fifth"
+
+The modPow function does modular exponentiation. So a.modPow(5, 3) == "a-to-the-fifth mod 3 "
