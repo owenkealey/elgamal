@@ -48,7 +48,7 @@ PrivateKey privateKeyWithId(String id) {
   String rawContents = File("out/keys/${id}_private.key").readAsStringSync();
   String decodedContents = String.fromCharCodes(base64Decode(rawContents));
   return PrivateKey(
-    a: BigInt.parse(decodedContents),
+    a: int.parse(decodedContents),
   );
 }
 

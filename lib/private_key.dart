@@ -2,7 +2,7 @@ part of elgamal;
 
 /// The private key
 class PrivateKey {
-  final BigInt a;
+  final int a;
 
   PrivateKey({
     required this.a,

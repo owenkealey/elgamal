@@ -2,7 +2,6 @@ library elgamal;
 
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:english_words/english_words.dart';
 
 part 'public_key.dart';
@@ -58,7 +57,7 @@ class ElGamalSuite {
     List<String> parts = decodedCipherText.split("|");
     BigInt r = BigInt.parse(parts.first);
     // Compute r^-a.
-    double rExp = 1 / r.pow(privateKey.a.toInt()).toInt();
+    double rExp = 1 / r.pow(privateKey.a).toInt();
     List<String> rawEncryptedCodeUnits = parts.last.split(",");
     List<int> decryptedCodeUnits = [];
     // Loop over every encrypted 't' and decrypt it. Add the
@@ -81,7 +80,7 @@ class ElGamalSuite {
     // Generate a random 'a'
     int a = _randomSecret();
     PublicKey publicKey = keyGenerator.generatePublicKey(a);
-    PrivateKey privateKey = keyGenerator.generatePrivateKey(BigInt.from(a));
+    PrivateKey privateKey = keyGenerator.generatePrivateKey(a);
     KeyPair pair = KeyPair(
       id: id,
       privateKey: privateKey,
@@ -92,7 +91,7 @@ class ElGamalSuite {
 
   /// Return a random number from 1-50
   int _randomSecret() {
-    return randomNumberGenerator.nextInt(50) + 1;
+    return randomNumberGenerator.nextInt(20) + 1;
   }
 }
 
@@ -118,7 +117,7 @@ class ElGamalKeyGenerator {
   /// Generates a private key.
   /// Computes a random 'a' and formalizes it into a
   /// [PrivateKey]
-  PrivateKey generatePrivateKey(BigInt a) {
+  PrivateKey generatePrivateKey(int a) {
     return PrivateKey(
       a: a,
     );
