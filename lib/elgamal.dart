@@ -26,7 +26,7 @@ class ElGamalSuite {
   String encrypt(String message, PublicKey key) {
     // Compute 'k'
     int k = _randomSecret();
-    // Compute r as alpha^k
+    // Compute r as α^k
     int r = pow(key.alpha, k).toInt();
     // Compute β^k
     int betaK = pow(key.beta, k).toInt();
