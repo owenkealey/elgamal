@@ -3,8 +3,8 @@ part of elgamal;
 /// The public key
 class PublicKey {
   final BigInt p;
-  final int alpha;
-  final int beta;
+  final BigInt alpha;
+  final BigInt beta;
 
   PublicKey({
     required this.p,

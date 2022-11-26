@@ -3,13 +3,18 @@ import 'dart:io';
 import 'package:elgamal/elgamal.dart';
 
 /// Saves cipher text to a file on disk
+/// Compreses the cipher text with GZip because it is usually
+/// very large
 void saveCipherTextToFile(String keyId, String cipherText) {
-  File("out/cipher_texts/${keyId}_enc.txt").writeAsStringSync(cipherText);
+  List<int> compressedUnits = GZipCodec().encode(cipherText.codeUnits);
+  File("out/cipher_texts/${keyId}_enc.bin").writeAsBytesSync(compressedUnits);
 }
 
 /// Loads cipher text from a file on disk
 String loadCipherTextFromFile(String keyId) {
-  return File("out/cipher_texts/${keyId}_enc.txt").readAsStringSync();
+  List<int> compressedBytes =
+      File("out/cipher_texts/${keyId}_enc.bin").readAsBytesSync();
+  return String.fromCharCodes(GZipCodec().decode(compressedBytes));
 }
 
 /// Saves a public key to disk. Public key's contents
@@ -37,8 +42,8 @@ PublicKey publicKeyWithId(String id) {
   List<String> tokens = decodedContents.split("-");
   return PublicKey(
     p: BigInt.parse(tokens[0]),
-    alpha: int.parse(tokens[1]),
-    beta: int.parse(tokens[2]),
+    alpha: BigInt.parse(tokens[1]),
+    beta: BigInt.parse(tokens[2]),
   );
 }
 

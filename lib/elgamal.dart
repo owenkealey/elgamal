@@ -26,15 +26,15 @@ class ElGamalSuite {
     // Compute 'k'
     int k = _randomSecret();
     // Compute r as α^k
-    int r = pow(key.alpha, k).toInt();
+    BigInt r = key.alpha.pow(k);
     // Compute β^k
-    int betaK = pow(key.beta, k).toInt();
+    BigInt betaK = key.beta.pow(k);
     String cipherText = "$r|";
     // Compute each individual 't' and add it to the
     // cipher text
     for (var i = 0; i < message.codeUnits.length; i++) {
       int codeUnit = message.codeUnits[i];
-      int t = betaK * codeUnit;
+      BigInt t = betaK * BigInt.from(codeUnit);
       String hexString = "0x${t.toRadixString(16)}";
       cipherText += hexString;
       // Only add a comma if we are not at the end
@@ -57,15 +57,15 @@ class ElGamalSuite {
     List<String> parts = decodedCipherText.split("|");
     BigInt r = BigInt.parse(parts.first);
     // Compute r^-a.
-    double rExp = 1 / r.pow(privateKey.a).toInt();
+    BigInt rExp = r.pow(privateKey.a);
     List<String> rawEncryptedCodeUnits = parts.last.split(",");
     List<int> decryptedCodeUnits = [];
     // Loop over every encrypted 't' and decrypt it. Add the
     // decrypted result to decryptedCodeUnits
     for (var rawEncryptedCodeUnit in rawEncryptedCodeUnits) {
-      int encryptedCodeUnit = int.parse(rawEncryptedCodeUnit);
-      int decryptedCodeUnit = (encryptedCodeUnit * rExp).round();
-      decryptedCodeUnits.add(decryptedCodeUnit);
+      BigInt encryptedCodeUnit = BigInt.parse(rawEncryptedCodeUnit);
+      BigInt decryptedCodeUnit = encryptedCodeUnit ~/ rExp;
+      decryptedCodeUnits.add(decryptedCodeUnit.toInt());
     }
     return String.fromCharCodes(decryptedCodeUnits);
   }
@@ -89,9 +89,9 @@ class ElGamalSuite {
     return pair;
   }
 
-  /// Return a random number from 1-50
+  /// Return a random number from 1-1000
   int _randomSecret() {
-    return randomNumberGenerator.nextInt(20) + 1;
+    return randomNumberGenerator.nextInt(999) + 1;
   }
 }
 
@@ -105,8 +105,8 @@ class ElGamalKeyGenerator {
   /// [PublicKey]
   PublicKey generatePublicKey(int a) {
     BigInt prime = _generatePrimeNumber();
-    int alpha = _getPrimitiveRoot(prime);
-    int beta = pow(alpha, a).toInt();
+    BigInt alpha = _getPrimitiveRoot(prime);
+    BigInt beta = alpha.pow(a);
     return PublicKey(
       p: prime,
       alpha: alpha,
@@ -126,19 +126,20 @@ class ElGamalKeyGenerator {
   /// Finds the first (and also smallest) primitive root in
   /// ℤp. Checks every number i and returns it (signifying it is a root)
   /// if i^(p-1)/2 = p - 1
-  int _getPrimitiveRoot(BigInt p) {
+  BigInt _getPrimitiveRoot(BigInt p) {
     // Convert the normal int '2' to a BigInt since
     // we can only do calculations on BigInts with other BigInts
     BigInt two = BigInt.from(2);
     BigInt pMinusOne = (p - BigInt.one);
     BigInt exp = pMinusOne ~/ two;
     for (var i = 0; i < double.maxFinite; i++) {
-      BigInt result = BigInt.from(i).modPow(exp, p);
+      BigInt iAsBig = BigInt.from(i);
+      BigInt result = iAsBig.modPow(exp, p);
       if (result == pMinusOne) {
-        return i;
+        return iAsBig;
       }
     }
-    return 0;
+    return BigInt.zero;
   }
 
   /// Generates a large number with arbitrary length
