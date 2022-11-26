@@ -219,7 +219,7 @@ class ElGamalKeyGenerator {
     return true;
   }
 
-  /// Generates a prime number.
+  /// Generates a 200 digit prime number.
   /// Generates a large number and keeps generating until the
   /// number it got is prime.
   BigInt _generatePrimeNumber() {
