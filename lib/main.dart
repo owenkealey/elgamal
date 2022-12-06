@@ -13,7 +13,7 @@ class ElGamalFrontEnd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-      title: "Flutter Demo",
+      title: "Elgamal Demo",
       theme: const CupertinoThemeData(
         brightness: Brightness.dark,
       ),
