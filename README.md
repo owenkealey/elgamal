@@ -8,7 +8,7 @@ There are two parts to this program:
     for input, sanitizes it, and then uses the ElGamal backend to actually
     do something useful (in this case, encrypt, decrypt, gen key).
 
-    This part also saves keys and encrypted cipher text to disk. Keys and cipher texts are stored in the out/ folder. Keys under out/keys and ciper text under out/cipher_texts. This part of the program does not implement elgamal. Just UI.
+    This part also saves keys and encrypted cipher text to disk. This part of the program does not implement elgamal. Just UI.
 
 2.  The ElGamal back end
     Can be found in lib/core/elgamal.dart. This implements the ElGamal cryptosystem including encrypting, decrypting and key generation.
