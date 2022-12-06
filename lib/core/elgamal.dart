@@ -17,7 +17,7 @@ class ElGamalSuite {
   ///
   /// Plain text is encrypted character by character by the
   /// character's UTF-16 code unit.
-  /// Returns cipher text base64 encoded in the format:
+  /// Returns cipher text in the format:
   /// r|tOne,tTwo,tThree...tN
   ///
   /// Where r is α^k and tN is a hexadecimal number
@@ -43,18 +43,15 @@ class ElGamalSuite {
         cipherText += ",";
       }
     }
-    String cipherTextEncoded = base64Encode(cipherText.codeUnits);
-    return cipherTextEncoded;
+    return cipherText;
   }
 
   /// Decrypts a cipher text using a [PrivateKey]
   ///
-  /// Cipher text is first base64 decoded.
   /// The first part of the text is the 'r' and the last part
   /// is the sequence of tN.
   String decrypt(String cipherText, PrivateKey privateKey) {
-    String decodedCipherText = String.fromCharCodes(base64Decode(cipherText));
-    List<String> parts = decodedCipherText.split("|");
+    List<String> parts = cipherText.split("|");
     BigInt r = BigInt.parse(parts.first);
     // Compute r^-a.
     BigInt rExp = r.pow(privateKey.a);

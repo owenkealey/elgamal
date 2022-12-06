@@ -1,8 +1,0 @@
-version: "Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)"
-options: "0a1db2776354ddae6f1ef49b69169a2ea4bba84dfab304b63a19bd2e21ebf80b"
-build_start_time: [1670311715, 182938098]
-build_end_time: [1670311718, 951777935]
-inputs:
-  "/Users/owenkealey/Documents/Classes/Crypto/elgamal/macos/Flutter/GeneratedPluginRegistrant.swift": [1670311696, 311319589]
-  "/Users/owenkealey/Documents/Classes/Crypto/elgamal/macos/Runner/AppDelegate.swift": [1654880799, 0]
-  "/Users/owenkealey/Documents/Classes/Crypto/elgamal/macos/Runner/MainFlutterWindow.swift": [1654880799, 0]
